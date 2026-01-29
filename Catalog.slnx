@@ -15,7 +15,5 @@
   </Folder>
   <Folder Name="/src/OrderService/Infrastructure/Adapters/Driving/">
     <Project Path="src/Order/Infrastructure/Adapters/Driving/Catalog.Order.API/Catalog.Order.API.csproj" />
-    <Project Path="src/Order/Infrastructure/Adapters/Driving/Catalog.Order.Kafka.Consumer/Catalog.Order.Kafka.Consumer.csproj" />
   </Folder>
-  <Folder Name="/src/OrderService/Infrastructure/Config/" />
 </Solution>
