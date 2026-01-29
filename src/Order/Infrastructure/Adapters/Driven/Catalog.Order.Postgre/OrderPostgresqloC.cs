@@ -12,11 +12,11 @@ using Catalog.Order.Postgresql.Repositories.PurchaseOrders;
 
 namespace Catalog.Order.Postgresql;
 
-public static class ServiceCollectionPersistenceIoC
+public static class OrderPostgresqloC
 {
     extension(IServiceCollection services)
     {
-        public IServiceCollection AddPersistenciaIoC(IConfiguration configuration)
+        public IServiceCollection AddPostgresqlIoC(IConfiguration configuration)
         {
             services.AddDbContext<OrderServiceContext>(options =>
                 options.UseNpgsql(

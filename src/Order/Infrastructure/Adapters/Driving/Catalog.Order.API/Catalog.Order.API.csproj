@@ -16,8 +16,9 @@
 
   <ItemGroup>
     <ProjectReference Include="../../../../Application/Catalog.Order.Application/Catalog.Order.Application.csproj" />
-    <ProjectReference Include="..\..\Driven\Catalog.Order.Messaging\Catalog.Order.Kafka.Producer.csproj" />
-    <ProjectReference Include="../../Driven/Catalog.Order.Pesistence/Catalog.Order.Postgresql.csproj" />    
+    <ProjectReference Include="../../Driven/Catalog.Order.kafka.Producer/Catalog.Order.Kafka.Producer.csproj" />
+    <ProjectReference Include="../../Driven/Catalog.Order.Postgre/Catalog.Order.Postgresql.csproj" />
+    
   </ItemGroup>
 
 </Project>

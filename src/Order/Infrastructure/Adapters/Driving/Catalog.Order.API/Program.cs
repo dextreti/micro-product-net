@@ -1,7 +1,7 @@
 using Catalog.Order.API.Middleware;
 using Catalog.Order.Application;
-using Catalog.Order.Postgresql;
 using Catalog.Order.Kafka;
+using Catalog.Order.Postgresql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-
-builder.Services.AddPersistenciaIoC(builder.Configuration); 
-builder.Services.AddMessagingConfiguration(builder.Configuration);
+builder.Services.AddPostgresqlIoC(builder.Configuration);
+builder.Services.AddKafkaProducerIoC(builder.Configuration);
 builder.Services.AddApplicationIoC();
 
 var app = builder.Build();

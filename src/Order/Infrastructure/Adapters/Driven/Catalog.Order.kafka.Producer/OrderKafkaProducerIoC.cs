@@ -9,11 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalog.Order.Kafka;
 
-public static class KafkaProducerIoC
+public static class OrderKafkaProducerIoC
 {
 
-
-    public static IServiceCollection AddMessagingConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddKafkaProducerIoC(this IServiceCollection services, IConfiguration configuration)
     {
         
         var producerConfig = new ProducerConfig
