@@ -24,9 +24,8 @@ pipeline {
             agent any 
             steps {
                 
-                sh "docker build -t ${IMAGE_NAME} ."                
-                
-                sh "minikube image load ${IMAGE_NAME}"
+                sh "docker build -t ${IMAGE_NAME} ."
+                echo "Imagen construida. kube, ejecuta 'minikube image load ${IMAGE_NAME}' manualmente."
             }
         }
 
