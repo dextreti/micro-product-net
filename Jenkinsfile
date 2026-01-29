@@ -1,18 +1,12 @@
 pipeline {
     agent none
-    
     environment {
+        // Cambia 'dextreti' por tu usuario real de Docker Hub
         IMAGE_NAME = "dextreti/order-api:latest"
     }
-    
     stages {
         stage('Restore & Build') {
-            agent {
-                docker { 
-                    image 'mcr.microsoft.com/dotnet/sdk:10.0' 
-                    args '-u root'
-                }
-            }
+            agent { docker { image 'mcr.microsoft.com/dotnet/sdk:10.0'; args '-u root' } }
             steps {
                 checkout scm
                 sh 'dotnet restore Catalog.slnx'
@@ -20,20 +14,17 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('Docker Build & Push') {
             agent any 
             steps {
-                
+                // Construimos la imagen localmente
                 sh "docker build -t ${IMAGE_NAME} ."
-                echo "Imagen construida. kube, ejecuta 'minikube image load ${IMAGE_NAME}' manualmente."
-            }
-        }
-
-        stage('Docker Tag & Push') {
-            agent any
-            steps {
                 
-                echo "Imagen ${IMAGE_NAME} cargada directamente en el clúster de Kubernetes."
+                // Usamos las credenciales guardadas en Jenkins para subirla a la nube
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
+                    sh "docker push ${IMAGE_NAME}"
+                }
             }
         }
     }
