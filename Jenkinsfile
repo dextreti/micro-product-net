@@ -2,24 +2,35 @@ pipeline {
     agent {
         docker { 
             image 'mcr.microsoft.com/dotnet/sdk:10.0' 
-            args '-u root'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock' 
         }
     }
+    environment {
+        IMAGE_NAME = "dextreti/order-api:latest"
+    }
+    
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('Restore') {
+        stage('Restore & Build') {
             steps {
-                // El formato .slnx es nativo en .NET 10
+                
                 sh 'dotnet restore Catalog.slnx'
+                sh 'dotnet build Catalog.slnx --configuration Release --no-restore'
             }
         }
-        stage('Build') {
+        stage('Docker Build') {
             steps {
-                sh 'dotnet build Catalog.slnx --configuration Release --no-restore'
+                
+                sh "docker build -t ${IMAGE_NAME} ."
+            }
+        }
+        stage('Docker Tag & Push') {
+            steps {
+                echo "Imagen ${IMAGE_NAME} lista localmente en Debian."                
             }
         }
     }
