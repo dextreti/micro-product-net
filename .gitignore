@@ -1,0 +1,32 @@
+## --- IDEs y Editores ---
+.idea/
+.vscode/
+*.swp
+*.bak
+.DS_Store
+
+## --- .NET ---
+# Carpetas de compilación
+[Bb]in/
+[Oo]bj/
+# Archivos de usuario y caché
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+## --- Publicación y Paquetes ---
+publish/
+out/
+.nuget/
+*.nupkg
+
+## --- Configuración Local y Secretos ---
+# No subir secretos ni configuraciones de desarrollo
+appsettings.Development.json
+appsettings.Local.json
+[Uu]ser[Ss]ecrets/
+
+## --- Docker ---
+.dockerignore

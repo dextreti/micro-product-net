@@ -1,0 +1,4 @@
+@BaseUrl = http://localhost:5206
+
+### Obtener una orden por ID (FORMA CORRECTA)
+GET {{BaseUrl}}/api/orders/3a724407-de65-434b-acc8-e304e7627b5e

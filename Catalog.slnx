@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/OrderService/" />
+  <Folder Name="/src/OrderService/Application/">
+    <Project Path="src/Order/Application/Catalog.Order.Application/Catalog.Order.Application.csproj" />
+  </Folder>
+  <Folder Name="/src/OrderService/Domain/">
+    <Project Path="src/Order/Domain/Catalog.Order.Domain/Catalog.Order.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/OrderService/Infrastructure/" />
+  <Folder Name="/src/OrderService/Infrastructure/Adapters/" />
+  <Folder Name="/src/OrderService/Infrastructure/Adapters/Driven/">
+    <Project Path="src/Order/Infrastructure/Adapters/Driven/Catalog.Order.kafka.Producer/Catalog.Order.Kafka.Producer.csproj" />
+    <Project Path="src/Order/Infrastructure/Adapters/Driven/Catalog.Order.Postgre/Catalog.Order.Postgresql.csproj" />
+  </Folder>
+  <Folder Name="/src/OrderService/Infrastructure/Adapters/Driving/">
+    <Project Path="src/Order/Infrastructure/Adapters/Driving/Catalog.Order.API/Catalog.Order.API.csproj" />
+    <Project Path="src/Order/Infrastructure/Adapters/Driving/Catalog.Order.Kafka.Consumer/Catalog.Order.Kafka.Consumer.csproj" />
+  </Folder>
+  <Folder Name="/src/OrderService/Infrastructure/Config/" />
+</Solution>

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Configs/" />
+    <Folder Include="ConfigMigrations/" />
+    <Folder Include="Contexts/" />
+    <Folder Include="ContextMigrations/" />
+    <Folder Include="Entities/" />
+    <Folder Include="mappers/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../../Domain/Catalog.Order.Domain/Catalog.Order.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+  <PackageReference Include="Mapster" Version="7.4.0" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    <PrivateAssets>all</PrivateAssets>
+  </PackageReference>
+   <!-- <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.1" /> -->
+  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+</ItemGroup>
+
+</Project>
