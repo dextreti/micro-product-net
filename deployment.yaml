@@ -17,12 +17,13 @@ spec:
       containers:
       - name: order-api
         image: dextreti/order-api:latest
-        imagePullPolicy: Never # usa la imagen que Jenkins crear localmente
+        # 'Always' K8s jale la imagen de Docker Hub
+        imagePullPolicy: Always 
         ports:
         - containerPort: 8080
-        env:
-        - name: postgres
-          value: "Host=postgres-0.postgres-service;Database=catalogs;Username=appuser;Password=secret"
+        env:        
+        - name: ConnectionStrings__DefaultConnection          
+          value: "Host=postgres;Port=5432;Database=catalogs;Username=appuser;Password=secret"
 ---
 apiVersion: v1
 kind: Service
@@ -34,5 +35,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
-  type: ClusterIP
+      targetPort: 8080  
+  type: NodePort
