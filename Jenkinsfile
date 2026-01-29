@@ -1,8 +1,7 @@
 pipeline {
     agent none
-    environment {
-        // Cambia 'dextreti' por tu usuario real de Docker Hub
-        IMAGE_NAME = "dextreti/order-api:latest"
+    environment {        
+        IMAGE_NAME = "dextre78/order-api:latest"
     }
     stages {
         stage('Restore & Build') {
