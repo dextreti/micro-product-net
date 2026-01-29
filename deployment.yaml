@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: order-api
-        image: dextreti/order-api:latest
+        image: dextre78/order-api:latest
         # 'Always' K8s jale la imagen de Docker Hub
         imagePullPolicy: Always 
         ports:
