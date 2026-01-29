@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-api
+  labels:
+    app: order-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-api
+  template:
+    metadata:
+      labels:
+        app: order-api
+    spec:
+      containers:
+      - name: order-api
+        image: dextreti/order-api:latest
+        imagePullPolicy: Never # usa la imagen que Jenkins crear localmente
+        ports:
+        - containerPort: 8080
+        env:
+        - name: postgres
+          value: "Host=postgres-0.postgres-service;Database=catalogs;Username=appuser;Password=secret"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-api-service
+spec:
+  selector:
+    app: order-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

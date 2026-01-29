@@ -1,5 +1,5 @@
 pipeline {
-    agent none // No definimos un agente global
+    agent none
     
     environment {
         IMAGE_NAME = "dextreti/order-api:latest"
@@ -21,17 +21,20 @@ pipeline {
         }
 
         stage('Docker Build') {
-            agent any // Volvemos al entorno de Jenkins donde SÍ hay comando docker
+            agent any 
             steps {
-                // Aquí el comando docker funcionará porque usa el del host Debian
-                sh "docker build -t ${IMAGE_NAME} ."
+                
+                sh "docker build -t ${IMAGE_NAME} ."                
+                
+                sh "minikube image load ${IMAGE_NAME}"
             }
         }
 
         stage('Docker Tag & Push') {
             agent any
             steps {
-                echo "Imagen ${IMAGE_NAME} creada exitosamente en el host."
+                
+                echo "Imagen ${IMAGE_NAME} cargada directamente en el clúster de Kubernetes."
             }
         }
     }
