@@ -21,7 +21,9 @@ spec:
         imagePullPolicy: Always 
         ports:
         - containerPort: 8080
-        env:        
+        env:  
+        - name: Kafka__BootstrapServers
+          value: "kafka-service:9092"      
         - name: ConnectionStrings__DefaultConnection          
           value: "Host=postgres;Port=5432;Database=catalogs;Username=appuser;Password=secret"
 ---

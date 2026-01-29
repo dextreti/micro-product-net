@@ -27,12 +27,12 @@ pipeline {
             }
         }
 
-        stage('Deploy to K8s') {
-            agent any
-            steps {                
-                sh "kubectl apply -f deployment.yaml"
-            }
-        }
+        // stage('Deploy to K8s') {
+        //     agent any
+        //     steps {                
+        //         sh "kubectl apply -f deployment.yaml"
+        //     }
+        // }
         
     }
 }

@@ -15,3 +15,21 @@ Content-Type: application/json
     }    
   ]
 }
+
+
+@BaseUrl = http://192.168.49.2:32460
+
+### kubes Crear una nueva orden de compra
+POST {{BaseUrl}}/api/orders/create
+Content-Type: application/json
+
+{
+  "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa2",
+  "items": [
+    {
+      "productId": "e77b1f06-1f5b-4d7b-8617-cac0d85a24d2",
+      "quantity": 2,
+      "unitPrice": 150.00
+    }    
+  ]
+}
