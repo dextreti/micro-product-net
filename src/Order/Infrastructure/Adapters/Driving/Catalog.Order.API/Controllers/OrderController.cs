@@ -8,10 +8,10 @@ namespace Catalog.Order.API.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly CreatePurchaseOrderHandler _createHandler;
-        private readonly GetPurchaseOrderByIdHandler _getHandler;
+        private readonly ICreatePurchaseOrderUseCase _createHandler;
+        private readonly IGetPurchaseOrderByIdUseCase _getHandler;
 
-        public OrderController(CreatePurchaseOrderHandler createHandler, GetPurchaseOrderByIdHandler getHandler)
+        public OrderController(ICreatePurchaseOrderUseCase createHandler, IGetPurchaseOrderByIdUseCase getHandler)
         {
             _createHandler = createHandler;
             _getHandler = getHandler;

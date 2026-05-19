@@ -9,7 +9,7 @@ public class PurchaseOrder
     public Guid Id { get; set; } 
     public Guid CustomerId { get; set; }
     public DateTime CreatedAt { get; set; }
-    public int TotalAmount { get; set; }
+    public decimal TotalAmount { get; set; }
 
     [Column("Status")]    
     public string PurchaseOrderStatus { get; set; } = "Pending";

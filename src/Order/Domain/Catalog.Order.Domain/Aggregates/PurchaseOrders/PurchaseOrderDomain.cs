@@ -8,7 +8,7 @@ public sealed class PurchaseOrderDomain : RootDomain
 {       
     public Guid CustomerId { get; private set; }
     public DateTime CreatedAt { get; private set; }
-    public int TotalAmount { get; private set; }
+    public decimal TotalAmount { get; private set; }
     public PurchaseOrderStatus Status { get; private set; }   
     
     private readonly List<PurchaseOrderItemDomain> _purchaseOrderItems = new();
@@ -46,8 +46,7 @@ public Result<bool> AddItem(Guid productId, int quantity, decimal unitPrice)
 
         _purchaseOrderItems.Add(itemResult.Value!);
         
-        // Actualizamos el estado del agregado
-        TotalAmount = _purchaseOrderItems.Sum(x => x.Quantity);
+        TotalAmount = _purchaseOrderItems.Sum(x => x.Subtotal);
         
         return Result<bool>.Success(true);
     }

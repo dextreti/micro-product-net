@@ -1,4 +1,4 @@
-using System;
+using Catalog.Order.Application.Common.Abstractions;
 using Catalog.Order.Domain.Aggregates.PurchaseOrders;
 using Catalog.Order.Domain.Common.Abstractions;
 using Catalog.Order.Domain.Events;
@@ -8,12 +8,12 @@ using FluentValidation;
 
 namespace Catalog.Order.Application.UseCases.CreatePurchaseOrders;
 
-public class CreatePurchaseOrderHandler : CommandHandler<CreatePurchaseOrderCommand, Guid>
+public class CreatePurchaseOrderHandler : CommandHandler<CreatePurchaseOrderCommand, Guid>, ICreatePurchaseOrderUseCase
 {
     private readonly IPurchaseOrderRepository _purchaseOrderRepository;
     private readonly IGenericProducer<OrderCreatedEvent> _producer;
     private readonly IValidator<CreatePurchaseOrderCommand> _validator;
-    
+
     public CreatePurchaseOrderHandler(
         IUnitOfWork unitOfWork,
         IPurchaseOrderRepository purchaseOrderRepository,
@@ -22,12 +22,11 @@ public class CreatePurchaseOrderHandler : CommandHandler<CreatePurchaseOrderComm
     {
         _purchaseOrderRepository = purchaseOrderRepository;
         _producer = producer;
-        _validator = validator;        
+        _validator = validator;
     }
 
-    protected async override Task<Result<Guid>> HandleInternalAsync(CreatePurchaseOrderCommand command, CancellationToken ct)
+    protected override async Task<Result<Guid>> HandleInternalAsync(CreatePurchaseOrderCommand command, CancellationToken ct)
     {
-        // 1. Validación
         var validationResult = await _validator.ValidateAsync(command, ct);
         if (!validationResult.IsValid)
         {
@@ -35,25 +34,26 @@ public class CreatePurchaseOrderHandler : CommandHandler<CreatePurchaseOrderComm
             return Result<Guid>.Failure(errors);
         }
 
-        // 2. Lógica de Dominio
         var orderResult = PurchaseOrderDomain.Create(command.CustomerId);
         if (orderResult.IsFailure) return Result<Guid>.Failure(orderResult.Error!);
 
         var purchaseOrder = orderResult.Value!;
-        
+
         foreach (var item in command.Items)
         {
             var itemResult = purchaseOrder.AddItem(item.ProductId, item.Quantity, item.UnitPrice);
             if (itemResult.IsFailure) return Result<Guid>.Failure(itemResult.Error!);
         }
 
-        // 3. Persistencia
         await _purchaseOrderRepository.CreateAsync(purchaseOrder, ct);
-        
-        // 4. Evento de Ida (Kafka)
-        var @event = new OrderCreatedEvent(purchaseOrder.Id.ToString());
-        await _producer.PublishAsync("purchase-order-topic", @event, ct);
-        
+
         return Result<Guid>.Success(purchaseOrder.Id);
+    }
+
+    // Kafka se publica DESPUÉS del SaveChangesAsync para garantizar que la BD ya persistió
+    protected override async Task AfterSaveAsync(CreatePurchaseOrderCommand command, Guid orderId, CancellationToken ct)
+    {
+        var @event = new OrderCreatedEvent(orderId.ToString());
+        await _producer.PublishAsync("purchase-order-topic", @event, ct);
     }
 }

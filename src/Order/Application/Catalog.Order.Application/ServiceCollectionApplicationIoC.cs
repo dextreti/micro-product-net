@@ -23,8 +23,8 @@ public static class ServiceCollectionApplicationIoC
                 services.AddValidatorsFromAssembly(typeof(ServiceCollectionApplicationIoC).Assembly);
                 
                 
-                services.AddScoped<CreatePurchaseOrderHandler>();                
-                services.AddScoped<GetPurchaseOrderByIdHandler>();                
+                services.AddScoped<ICreatePurchaseOrderUseCase, CreatePurchaseOrderHandler>();
+                services.AddScoped<IGetPurchaseOrderByIdUseCase, GetPurchaseOrderByIdHandler>();
 
                 return services;
             }
